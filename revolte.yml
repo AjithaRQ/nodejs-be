@@ -1,0 +1,29 @@
+revolte:
+  version: "1.0"
+  project: Revolte QA application
+  appName: revolte-qa-app
+  type: WEB_SERVICE
+  health: /health
+  port: 8080
+  env:
+    #preview, staging, production
+    qa:
+      branch: qa
+      entryPoint: index.js
+      specs:
+        compute:
+          cpu: 2 #1,2,4,8
+          memory: 2
+          storage: 30
+        database:
+          cpu: 2
+          memory: 1
+          storage: 30
+          engine: postgres
+          version: "16"
+      variables:
+        BASE_URL: /api/v1
+        DATABASE_URL: "#{dbUrl}"
+        DATABASE_PORT: "#{dbPort}"
+        DATABASE_USERNAME: "#{dbUsername}"
+        DATABASE_PASSWORD: "#{dbPassword}"
