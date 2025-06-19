@@ -1,29 +1,128 @@
 revolte:
-  version: "1.0"
-  project: Revolte QA application
-  appName: revolte-qa-app
-  type: WEB_SERVICE
-  health: /health
-  port: 8080
+  version: '1.0'
+  project: Project New
+  appName: app-new-test
   env:
-    #preview, staging, production
+    production:
+      branch: main
+      services:
+        rid_1:
+          name: web-service
+          type: WEB_SERVICE
+          entryPoint: index.js
+          domain: api.revolte.com
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+            autoScaling:
+              replica:
+                min: 1
+                max: 3
+          properties:
+            health: /health
+            port: 8080
+            variables:
+              BASE_URL: /api/v1
+              DATABASE_URL: '#{db.dbUrl}'
+              DATABASE_PORT: '#{db.dbPort}'
+              DATABASE_USERNAME: '#{db.dbUsername}'
+              DATABASE_PASSWORD: '#{db.dbPassword}'
+              DATABASE_NAME: '#{db.dbName}'
+        rid_2:
+          name: db
+          type: DATABASE
+          specifications:
+            cpu: 2
+            memory: 4
+            storage: 50
+            engine: postgres
+    staging:
+      branch: staging
+      services:
+        rid_1:
+          name: web-service
+          type: WEB_SERVICE
+          entryPoint: index.js
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+          properties:
+            health: /health
+            port: 8080
+            variables:
+              BASE_URL: /api/v1
+              DATABASE_URL: '#{db.dbUrl}'
+              DATABASE_PORT: '#{db.dbPort}'
+              DATABASE_USERNAME: '#{db.dbUsername}'
+              DATABASE_PASSWORD: '#{db.dbPassword}'
+              DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
+        rid_2:
+          name: db
+          type: DATABASE
+          specifications:
+            cpu: 2
+            memory: 4
+            storage: 50
+            engine: postgres
     qa:
       branch: qa
-      entryPoint: index.js
-      specs:
-        compute:
-          cpu: 2 #1,2,4,8
-          memory: 2
-          storage: 30
-        database:
-          cpu: 2
-          memory: 1
-          storage: 30
-          engine: postgres
-          version: "16"
-      variables:
-        BASE_URL: /api/v1
-        DATABASE_URL: "#{dbUrl}"
-        DATABASE_PORT: "#{dbPort}"
-        DATABASE_USERNAME: "#{dbUsername}"
-        DATABASE_PASSWORD: "#{dbPassword}"
+      services:
+        rid_1:
+          name: web-service
+          type: WEB_SERVICE
+          entryPoint: index.js
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+          properties:
+            health: /health
+            port: 8080
+            variables:
+              BASE_URL: /api/v1
+              DATABASE_URL: '#{db.dbUrl}'
+              DATABASE_PORT: '#{db.dbPort}'
+              DATABASE_USERNAME: '#{db.dbUsername}'
+              DATABASE_PASSWORD: '#{db.dbPassword}'
+              DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
+        rid_2:
+          name: db
+          type: DATABASE
+          specifications:
+            cpu: 2
+            memory: 4
+            storage: 50
+            engine: postgres
+    preview:
+      services:
+        rid_1:
+          name: web-service
+          type: WEB_SERVICE
+          entryPoint: index.js
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+          properties:
+            health: /health
+            port: 8080
+            variables:
+              BASE_URL: /api/v1
+              DATABASE_URL: '#{db.dbUrl}'
+              DATABASE_PORT: '#{db.dbPort}'
+              DATABASE_USERNAME: '#{db.dbUsername}'
+              DATABASE_PASSWORD: '#{db.dbPassword}'
+              DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
+        rid_2:
+          name: db
+          type: DATABASE
+          specifications:
+            cpu: 2
+            memory: 4
+            storage: 50
+            engine: postgres
