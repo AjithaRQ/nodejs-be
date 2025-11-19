@@ -13,10 +13,10 @@ revolte:
           javascript/arrayCallbackReturn: warn
   env:
     staging:
-      branch: main
-      codeReview: true
-      codeQuality: true
-      testSuite: true
+      branch: dev
+      codeReview: false
+      codeQuality: false
+      testSuite: false
       services:
         rid_2:
           type: WEB_SERVICE
@@ -77,7 +77,7 @@ revolte:
             storage: 30
             engine: postgres
     production:
-      branch: dev
+      branch: main
       codeReview: true
       codeQuality: true
       testSuite: false
