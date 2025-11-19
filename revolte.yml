@@ -1,7 +1,16 @@
 revolte:
   version: '1.0'
-  project: Production
-  appName: poddle be
+  project: Dressberry
+  appName: nodeapp
+  config:
+    codeReview:
+      summarize: true
+      suggestFixes: false
+      commentStyle: Balanced
+    codeQuality:
+      codeStyle:
+        rules:
+          javascript/arrayCallbackReturn: warn
   env:
     staging:
       branch: staging
@@ -35,6 +44,9 @@ revolte:
             engine: postgres
     qa:
       branch: qa
+      codeReview: true
+      codeQuality: true
+      testSuite: false
       services:
         rid_1:
           type: WEB_SERVICE
@@ -64,7 +76,7 @@ revolte:
             storage: 30
             engine: postgres
     production:
-      branch: qa
+      branch: main
       services:
         rid_1:
           type: WEB_SERVICE
