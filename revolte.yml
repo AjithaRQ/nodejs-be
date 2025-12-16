@@ -2,6 +2,13 @@ revolte:
   version: '1.0'
   project: AC Project
   appName: app-check-be
+  config:
+    codeReview:
+      summarize: true
+      suggestFixes: true
+      commentStyle: Verbose
+      excludes:
+        - package.json
   env:
     staging:
       branch: staging
@@ -36,6 +43,7 @@ revolte:
             engine: postgres
     qa:
       branch: qa
+      codeReview: true
       services:
         rid_1:
           type: WEB_SERVICE
@@ -100,6 +108,7 @@ revolte:
             storage: 30
             engine: postgres
     preview:
+      codeReview: true
       services:
         rid_1:
           type: WEB_SERVICE
