@@ -1,30 +1,27 @@
 revolte:
   version: '1.0'
-  project: Project One
-  appName: backend-app
+  project: AC Project
+  appName: app-check-be
   config:
     codeReview:
       summarize: true
       suggestFixes: true
-      commentStyle: Balanced
-    codeQuality:
-      codeStyle:
-        rules:
-          javascript/arrayCallbackReturn: warn
+      commentStyle: Verbose
+      excludes:
+        - package.json
   env:
     staging:
-      branch: dev
+      branch: staging
       codeReview: false
-      codeQuality: false
-      testSuite: false
       services:
-        rid_2:
+        rid_1:
           type: WEB_SERVICE
-          name: web_service
+          name: web-service
           entryPoint: index.js
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -32,11 +29,12 @@ revolte:
               DATABASE_USERNAME: '#{db.dbUsername}'
               DATABASE_PASSWORD: '#{db.dbPassword}'
               DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
           specifications:
             cpu: 2
-            memory: 1
+            memory: 2
             storage: 30
-        rid_3:
+        rid_2:
           type: DATABASE
           name: db
           specifications:
@@ -46,17 +44,16 @@ revolte:
             engine: postgres
     qa:
       branch: qa
-      codeReview: false
-      codeQuality: false
-      testSuite: false
+      codeReview: true
       services:
-        rid_2:
+        rid_1:
           type: WEB_SERVICE
-          name: web_service
+          name: web-service
           entryPoint: index.js
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -64,11 +61,12 @@ revolte:
               DATABASE_USERNAME: '#{db.dbUsername}'
               DATABASE_PASSWORD: '#{db.dbPassword}'
               DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
           specifications:
             cpu: 2
-            memory: 1
+            memory: 4
             storage: 30
-        rid_3:
+        rid_2:
           type: DATABASE
           name: db
           specifications:
@@ -78,17 +76,16 @@ revolte:
             engine: postgres
     production:
       branch: main
-      codeReview: true
-      codeQuality: true
-      testSuite: false
+      codeReview: false
       services:
-        rid_2:
+        rid_1:
           type: WEB_SERVICE
-          name: web_service
+          name: web-service
           entryPoint: index.js
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -96,20 +93,15 @@ revolte:
               DATABASE_USERNAME: '#{db.dbUsername}'
               DATABASE_PASSWORD: '#{db.dbPassword}'
               DATABASE_NAME: '#{db.dbName}'
-          insights:
-            cpu:
-              - cpu_time_idle
-              - cpu_time_user
-              - cpu_time_system
           specifications:
             cpu: 2
-            memory: 1
+            memory: 2
             storage: 30
             autoScaling:
               replica:
                 min: 1
-                max: 1
-        rid_3:
+                max: 3
+        rid_2:
           type: DATABASE
           name: db
           specifications:
@@ -118,17 +110,16 @@ revolte:
             storage: 30
             engine: postgres
     preview:
-      codeReview: false
-      codeQuality: false
-      testSuite: false
+      codeReview: true
       services:
-        rid_2:
+        rid_1:
           type: WEB_SERVICE
-          name: web_service
+          name: web-service
           entryPoint: index.js
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -136,11 +127,12 @@ revolte:
               DATABASE_USERNAME: '#{db.dbUsername}'
               DATABASE_PASSWORD: '#{db.dbPassword}'
               DATABASE_NAME: '#{db.dbName}'
+              DATABASE_CONNECTION_STRING: '#{db.dbConnectionString}'
           specifications:
             cpu: 2
-            memory: 1
+            memory: 2
             storage: 30
-        rid_3:
+        rid_2:
           type: DATABASE
           name: db
           specifications:
