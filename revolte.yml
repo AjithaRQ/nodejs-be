@@ -1,7 +1,7 @@
 revolte:
   version: '1.0'
-  project: Project One
-  appName: backend-app
+  project: Test
+  appName: webservice
   config:
     codeReview:
       summarize: true
@@ -16,7 +16,6 @@ revolte:
       branch: dev
       codeReview: false
       codeQuality: false
-      testSuite: false
       services:
         rid_2:
           type: WEB_SERVICE
@@ -25,6 +24,7 @@ revolte:
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -48,7 +48,6 @@ revolte:
       branch: qa
       codeReview: false
       codeQuality: false
-      testSuite: false
       services:
         rid_2:
           type: WEB_SERVICE
@@ -57,6 +56,7 @@ revolte:
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -80,7 +80,6 @@ revolte:
       branch: main
       codeReview: true
       codeQuality: true
-      testSuite: false
       services:
         rid_2:
           type: WEB_SERVICE
@@ -89,6 +88,7 @@ revolte:
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
@@ -109,6 +109,14 @@ revolte:
               replica:
                 min: 1
                 max: 1
+              utilization:
+                cpu:
+                  target: 70
+                memory:
+                  target: 70
+              behavior:
+                scaleDown:
+                  stabilizationWindow: 300
         rid_3:
           type: DATABASE
           name: db
@@ -120,7 +128,6 @@ revolte:
     preview:
       codeReview: false
       codeQuality: false
-      testSuite: false
       services:
         rid_2:
           type: WEB_SERVICE
@@ -129,6 +136,7 @@ revolte:
           properties:
             health: /health
             port: 8080
+            loadBalancerMode: dedicated
             variables:
               BASE_URL: /api/v1
               DATABASE_URL: '#{db.dbUrl}'
